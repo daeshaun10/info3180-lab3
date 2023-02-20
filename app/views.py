@@ -1,7 +1,8 @@
 from app import app
 from flask import render_template, request, redirect, url_for, flash
-
-
+from .forms import ContactForm
+from app import mail
+from flask_mail import Message
 ###
 # Routing for your application.
 ###
@@ -17,10 +18,41 @@ def about():
     """Render the website's about page."""
     return render_template('about.html', name="Mary Jane")
 
+## ------------------------- contact route ------------------------------------- ##
 
-###
-# The functions below should be applicable to all Flask apps.
-###
+@app.route('/contact/', methods=('GET', 'POST'))
+def contact():
+    form = ContactForm() ## assigned contact form to a form variable
+    if request.method == 'POST' and form.validate_on_submit(): 
+        ## this portion of code only works when request method is POST and form is successfully validated (means all fields are filled)
+
+        ## creating the message body and taking data from request method
+        ## 1. request.form['subject'] -- subject field data of form 
+        ## 2. request.form['name'] -- name field data of form 
+        ## 3. request.form['email'] -- email field data of form 
+        ## 4. request.form['msg'] -- msg field data of form 
+        subject = request.form["subject"]
+        to = "to@example.com"
+        name = request.form["name"]
+        sender_email = request.form['email']
+        message_body = request.form['msg']
+
+        ## creating message with parameters
+        msg = Message(subject,  
+                  sender=(name, sender_email),
+                  recipients=[to])
+
+        msg.body = message_body ## attaching body to message
+        mail.send(msg) ## send the message using flask_mail
+
+        ## flashing the message and redirecting to the homepage
+        flash('Thank you for contacting.')
+        return redirect(url_for("home"))
+
+    ## if above process fails the only contact form will be displayed again   
+    return render_template('contact.html', form=form)
+
+## ------------------------------------------------------------------------------##
 
 
 # Flash errors from the form if validation fails

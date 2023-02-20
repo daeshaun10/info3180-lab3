@@ -1,3 +1,44 @@
 body {
     padding-top: 5rem;
 }
+
+.flashes {               /* for the flash message on the home page */
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgb(255, 146, 3);
+    color: rgb(255, 146, 3);
+    font-weight: 700;
+    padding: 10px;
+    font-size: 2rem;
+}
+
+.errors {               /* for the flash message on the home page, nothing much just some background color change */
+    color: red;
+    font-size: 50px;
+}
+
+.btn {                  /* applied bootstrap btn primary but have to increase the width */
+    width: 100px;
+}
+
+.input {                /* changed the input of the form */
+    margin-bottom: 20px; 
+}
+
+.required {             /* for the required text */
+    color: red;
+}
+
+.text-area {            /* text-area properties, little margin at the bottom and resize property set to none */
+    margin-bottom: 20px;
+    resize: none;
+}
+
+.title {                /* had to make the title bold */
+    font-weight: bold;
+}
